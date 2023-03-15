@@ -33,7 +33,7 @@ app.use(xssClean());
 app.use(rateLimit({ windowMs: 10 * 60 * 1000, max: 500 })); //15 minutes 100 requests per IP address
 
 app.get("/", (req, res) => {
-  res.send('<h1>NoonAPI API</h1><a href="/api/api-docs">Documentation</a>');
+  res.send('<h1>NoonAPI API</h1><a href="/api-docs">Documentation</a>');
 });
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -61,7 +61,7 @@ dbConnect();
 
 //System Initialization
 const start = () => {
-  const PORT = process.env.PORT || 6000;
+  const PORT = process.env.PORT || 5000;
   app.listen(PORT, console.log(`Server is listening on port ${PORT}...`));
 };
 try {
