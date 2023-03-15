@@ -1,0 +1,625 @@
+openapi: 3.0.0
+info:
+  title: NoonAPI
+  contact:
+    name: Jaifan Zakaria
+    url: github.com/Jaifan
+    email: jafranbinzakaria@gmail.com
+  version: "1.0"
+servers:
+  - url: https://noonapi.onrender.com/api/
+    variables: {}
+paths:
+  /product:
+    get:
+      tags:
+        - Product
+      summary: GetAllProducts
+      operationId: GetAllProducts
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /product/{id}:
+    get:
+      tags:
+        - Product
+      summary: GetSingleProduct
+      operationId: GetSingleProduct
+      parameters:
+        - name: id
+          in: path
+          description: ID of the product to fetch
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+
+  /product/search:
+    get:
+      tags:
+        - Product
+      summary: SearchProductByName
+      operationId: SearchProductByName
+      parameters:
+        - name: name
+          in: query
+          description: ""
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: apple
+        - name: category
+          in: query
+          description: ""
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: gadgets
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /product/auth/create:
+    post:
+      tags:
+        - Product
+      summary: CreateProduct
+      operationId: CreateProduct
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/CreateProductCopyRequest"
+                - example:
+                    name: d product
+                    overview: 256 ROM 8 RAM 12.9 Display
+                    price: "280"
+                    imgSourceUrl:
+                      - https://m.media-amazon.com/images/I/81GCpJkAmFL._AC_SX679_.jpg
+                      - https://m.media-amazon.com/images/I/81GCpJkAmFL._AC_SX679_.jpg
+                    quantity: "5"
+                    category: Gadgets
+            example:
+              name: d product
+              overview: 256 ROM 8 RAM 12.9 Display
+              price: "280"
+              imgSourceUrl:
+                - https://m.media-amazon.com/images/I/81GCpJkAmFL._AC_SX679_.jpg
+                - https://m.media-amazon.com/images/I/81GCpJkAmFL._AC_SX679_.jpg
+              quantity: "5"
+              category: Gadgets
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /product/auth/{id}:
+    delete:
+      tags:
+        - Product
+      summary: DeleteProductByID
+      operationId: DeleteProductByID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the product to delete
+          required: true
+          schema:
+            type: string
+            example: "641028ce158097fc5e131f90"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+
+  /review/auth/create/{productId}:
+    post:
+      tags:
+        - Review
+      summary: CreateReview
+      operationId: CreateReview
+      parameters:
+        - name: productId
+          in: path
+          description: ID of the product to create a review for
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/CreateReviewCopyRequest"
+                - example:
+                    description: decent one product
+                    rating: "4"
+            example:
+              description: decent one product
+              rating: "4"
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+
+  /review/auth:
+    get:
+      tags:
+        - Review
+      summary: GetAllReview
+      operationId: GetAllReview
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /review/auth/{id}:
+    delete:
+      tags:
+        - Review
+      summary: DeleteReviewByID
+      operationId: DeleteReviewByID
+      parameters:
+        - in: path
+          name: id
+          description: ID of the review to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+
+  /review/{id}:
+    get:
+      tags:
+        - Review
+      summary: GetReviewByID
+      operationId: GetReviewByID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the review to fetch
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+
+  /user/auth:
+    get:
+      tags:
+        - User
+      summary: GetAllUser
+      operationId: GetAllUser
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /user/auth/{id}:
+    delete:
+      tags:
+        - User
+      summary: DeleteUserByID
+      operationId: DeleteUserByID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user to delete
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    get:
+      tags:
+        - User
+      summary: GetSingleUser
+      operationId: GetSingleUser
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user to retrieve
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+
+  /user/auth/cart:
+    patch:
+      tags:
+        - User
+      summary: EmptyCart
+      operationId: EmptyCart
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /user/auth/cart/{id}:
+    patch:
+      tags:
+        - User
+      summary: AddProductToCart Copy
+      operationId: AddProductToCartCopy
+      parameters:
+        - name: id
+          in: path
+          description: ID of the cart to update
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    delete:
+      tags:
+        - User
+      summary: RemoveProductToCart
+      operationId: RemoveProductToCart
+      parameters:
+        - name: id
+          in: path
+          description: ID of the cart to remove products from
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+
+  /user/login:
+    post:
+      tags:
+        - User
+      summary: LoginUser
+      operationId: LoginUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/LoginUserCopyRequest"
+                - example:
+                    email: jaifan1213@gmail.com
+                    password: "123456"
+            example:
+              email: jaifan1213@gmail.com
+              password: "123456"
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /user/create:
+    post:
+      tags:
+        - User
+      summary: CreateUser
+      operationId: CreateUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/CreateUserCopyRequest"
+                - example:
+                    name: Rerol islam
+                    email: jaifan1213@gmail.com
+                    password: "123456"
+            example:
+              name: Rerol islam
+              email: jaifan1213@gmail.com
+              password: "123456"
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /vendor/{id}:
+    get:
+      tags:
+        - Vendor
+      summary: GetSingleVendor
+      operationId: GetSingleVendor
+      parameters:
+        - name: id
+          in: path
+          description: ID of the vendor to fetch
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+    delete:
+      tags:
+        - Vendor
+      summary: DeleteVendorByID
+      operationId: DeleteVendorByID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the vendor to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+
+  /vendor/create:
+    post:
+      tags:
+        - Vendor
+      summary: CreateVendor
+      operationId: CreateVendor
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/CreateVendorCopyRequest"
+                - example:
+                    name: B Store
+                    password: "123456"
+            example:
+              name: B Store
+              password: "123456"
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /vendor/login:
+    post:
+      tags:
+        - Vendor
+      summary: LoginVendor
+      operationId: LoginVendor
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/LoginVendorCopyRequest"
+                - example:
+                    name: Apple Store
+                    password: "123456"
+            example:
+              name: Apple Store
+              password: "123456"
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /vendor:
+    get:
+      tags:
+        - Vendor
+      summary: GetAllVendor
+      operationId: GetAllVendor
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+components:
+  schemas:
+    CreateProductCopyRequest:
+      title: CreateProductCopyRequest
+      required:
+        - name
+        - overview
+        - price
+        - imgSourceUrl
+        - quantity
+        - category
+      type: object
+      properties:
+        name:
+          type: string
+        overview:
+          type: string
+        price:
+          type: string
+        imgSourceUrl:
+          type: array
+          items:
+            type: string
+          description: ""
+        quantity:
+          type: string
+        category:
+          type: string
+      example:
+        name: d product
+        overview: 256 ROM 8 RAM 12.9 Display
+        price: "280"
+        imgSourceUrl:
+          - https://m.media-amazon.com/images/I/81GCpJkAmFL._AC_SX679_.jpg
+          - https://m.media-amazon.com/images/I/81GCpJkAmFL._AC_SX679_.jpg
+        quantity: "5"
+        category: Gadgets
+    CreateReviewCopyRequest:
+      title: CreateReviewCopyRequest
+      required:
+        - description
+        - rating
+      type: object
+      properties:
+        description:
+          type: string
+        rating:
+          type: string
+      example:
+        description: decent one product
+        rating: "4"
+    LoginUserCopyRequest:
+      title: LoginUserCopyRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: jaifan1213@gmail.com
+        password: "123456"
+    CreateUserCopyRequest:
+      title: CreateUserCopyRequest
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: Rerol islam
+        email: jaifan1213@gmail.com
+        password: "123456"
+    CreateVendorCopyRequest:
+      title: CreateVendorCopyRequest
+      required:
+        - name
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+      example:
+        name: B Store
+        password: "123456"
+    LoginVendorCopyRequest:
+      title: LoginVendorCopyRequest
+      required:
+        - name
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+      example:
+        name: Apple Store
+        password: "123456"
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Misc
+    description: ""
+  - name: Product
+    description: ""
+  - name: Review
+    description: ""
+  - name: User
+    description: ""
+  - name: Vendor
+    description: ""

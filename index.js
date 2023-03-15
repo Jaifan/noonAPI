@@ -13,10 +13,15 @@ const authMiddleware = require("./Middlewares/authMiddleware");
 
 const express = require("express");
 const app = express();
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
 const cors = require("cors");
 const helmet = require("helmet");
 const xssClean = require("xss-clean");
 const rateLimit = require("express-rate-limit");
+
+//Swagger Documentation
+const swaggerDocument = YAML.load("./swagger.yaml");
 
 //App Middlewares
 app.use(express.json());
@@ -28,8 +33,10 @@ app.use(xssClean());
 app.use(rateLimit({ windowMs: 10 * 60 * 1000, max: 500 })); //15 minutes 100 requests per IP address
 
 app.get("/", (req, res) => {
-  res.send("Noon API as Demo System Architecture");
+  res.send('<h1>NoonAPI API</h1><a href="/api/api-docs">Documentation</a>');
 });
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 //App Routes
 
 const baseURl = "/api";
